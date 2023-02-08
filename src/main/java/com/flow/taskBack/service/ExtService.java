@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -29,7 +30,7 @@ public class ExtService {
 
         log.info("확장자 : {} 등록 완료.", entity.getName());
 
-        return extRespository.findByName(entity.getName());
+        return findAll();
     }
 
     // delete
@@ -37,11 +38,26 @@ public class ExtService {
         validate(entity);
         try {
             extRespository.delete(entity);
+
         } catch(Exception e) {
             log.error("error 삭제시 발생 ", entity.getName(), e);
 
             throw new RuntimeException("error 삭제시 발생" + entity.getName());
         }
+        return findAll();
+    }
+
+    // update
+    public List<ExtEntity> update(final ExtEntity entity){
+        validate(entity);
+
+        final Optional<ExtEntity> original = extRespository.findById(entity.getName());
+
+        original.ifPresent(ext -> {
+            ext.setChecked(entity.getChecked());
+
+            extRespository.save(ext);
+        });
         return findAll();
     }
 

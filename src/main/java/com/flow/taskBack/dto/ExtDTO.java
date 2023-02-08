@@ -14,11 +14,13 @@ public class ExtDTO {
     private String name;
     private String fix_yn;
     private int seq;
+    private String checked;
 
     public ExtDTO(final ExtEntity entity) {
         this.name 	= entity.getName();
         this.fix_yn = entity.getFix_yn();
         this.seq 	= entity.getSeq();
+        this.checked = entity.getChecked();
     }
 
     public static ExtEntity toEntity(final ExtDTO dto) {
@@ -26,6 +28,7 @@ public class ExtDTO {
                 .name(dto.getName())
                 .fix_yn(dto.getFix_yn())
                 .seq(dto.getSeq())
+                .checked(dto.getChecked())
                 .build();
     }
 }

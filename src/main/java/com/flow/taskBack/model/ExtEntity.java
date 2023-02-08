@@ -26,4 +26,7 @@ public class ExtEntity {
 
     @Column(name = "seq")
     private int seq; 			// 확장자 순서
+
+    @Column(name = "checked")
+    private String checked;     // 선택 여부
 }

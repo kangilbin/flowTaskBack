@@ -74,4 +74,20 @@ public class ExtController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+    // 확장자 수정
+    @PutMapping
+    public ResponseEntity<?> updateExt(@RequestBody ExtDTO dto){
+
+        ExtEntity entity = ExtDTO.toEntity(dto);
+
+        List<ExtEntity> entities = service.update(entity);
+
+        List<ExtDTO> dtos = entities.stream().map(ExtDTO::new).collect(Collectors.toList());
+
+        ResponseDTO<ExtDTO> response = ResponseDTO.<ExtDTO>builder().data(dtos).build();
+
+        return ResponseEntity.ok().body(response);
+    }
+
 }
